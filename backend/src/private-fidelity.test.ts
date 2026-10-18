@@ -11,6 +11,13 @@ function response(content: string): Response {
     status: 200, headers: { "Content-Type": "application/json" },
   });
 }
+function auditResponse(content: string, kind: "narration" | "owner_to_partner" = "narration"): Response {
+  return response(JSON.stringify({ segments: [{ kind, text: content }] }));
+}
+function replyOrAuditResponse(content: string, init?: RequestInit, kind: "narration" | "owner_to_partner" = "narration"): Response {
+  const body = JSON.parse(String(init?.body)) as { response_format?: { type: string } };
+  return body.response_format?.type === "json_object" ? auditResponse(content, kind) : response(content);
+}
 beforeEach(() => {
   vi.stubEnv("DEEPSEEK_API_KEY", "synthetic-offline-test-key");
   vi.stubEnv("DEEPWE_PRIVATE_PROVIDER", "deepseek");
@@ -22,7 +29,7 @@ describe("私密来源核对的 AI 与真实 worker 路径（合成 DB，mock tr
     const requests: Array<{ messages: Array<{ role: string; content: string }> }> = [];
     const fetchMock = vi.fn(async (_url: unknown, init?: RequestInit) => {
       requests.push(JSON.parse(String(init?.body)));
-      return response("你在等待时的感受，对方是否知道？");
+      return replyOrAuditResponse("你在等待时的感受，对方是否知道？", init);
     });
     vi.stubGlobal("fetch", fetchMock);
     const result = await privateConversationReply({ history: [], message: "伴侣晚到，我感到失落。原因还不知道。", notes: [], personalPreferences: [] });
@@ -33,16 +40,30 @@ describe("私密来源核对的 AI 与真实 worker 路径（合成 DB，mock tr
   });
 
   it("核对器仍返回不可拆肯定等待时失败，不退回首答、不增加请求", async () => {
+    const errors = vi.spyOn(console, "error").mockImplementation(() => undefined);
     const fetchMock = vi.fn().mockResolvedValueOnce(response("合成首答"))
-      .mockResolvedValueOnce(response("你一直在等他。"));
+      .mockResolvedValueOnce(auditResponse("你一直在等他。"));
     vi.stubGlobal("fetch", fetchMock);
     await expect(privateConversationReply({ history: [], message: "伴侣晚到，我感到失落。", notes: [], personalPreferences: [] }))
       .rejects.toBeInstanceOf(AiServiceError);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(errors).toHaveBeenCalledWith("Private reply blocked by local source check", { reason: expect.any(String) });
+  });
+
+  it("核对器返回旧纯文本格式时拒绝，不回退首答或增加请求", async () => {
+    const errors = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const fetchMock = vi.fn().mockResolvedValueOnce(response("合成首答"))
+      .mockResolvedValueOnce(response("你可以继续说说。"));
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(privateConversationReply({ history: [], message: "我想接着聊。", notes: [], personalPreferences: [] }))
+      .rejects.toBeInstanceOf(AiServiceError);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(errors).toHaveBeenCalledWith("Model response unavailable", expect.objectContaining({ stage: "audit", reason: "invalid_schema" }));
   });
 
   it("代写只有无来源时间附加语时保持两句与原有内容", async () => {
-    vi.stubGlobal("fetch", vi.fn(async () => response("你晚到，我在等的时候感到失落。我只是想表达我的感受。")));
+    vi.stubGlobal("fetch", vi.fn(async (_url: unknown, init?: RequestInit) =>
+      replyOrAuditResponse("你晚到，我在等的时候感到失落。我只是想表达我的感受。", init, "owner_to_partner")));
     const result = await privateConversationReply({ history: [], message: "伴侣晚到，我失落。只代写两句，不加承诺。", notes: [], personalPreferences: [] });
     expect(result.reply).toBe("你晚到，我当时感到失落。我只是想表达我的感受。");
   });
@@ -119,9 +140,9 @@ describe("私密来源核对的 AI 与真实 worker 路径（合成 DB，mock tr
     const oldNote = core.listCurrentNotes(conversation.id).find(note => note.id === noteId)!;
     const errors = vi.spyOn(console, "error").mockImplementation(() => undefined);
     let requests = 0;
-    vi.stubGlobal("fetch", vi.fn(async () => {
+    vi.stubGlobal("fetch", vi.fn(async (_url: unknown, init?: RequestInit) => {
       requests++;
-      return requests <= 2 ? response("你在等待时的感受，对方是否知道？")
+      return requests <= 2 ? replyOrAuditResponse("你在等待时的感受，对方是否知道？", init)
         : response('{"notes":[{"kind":"user_statement","content":"合成不可落库正文","sourceMessageIds":["missing"]}]}');
     }));
     wakePrivateWorker();

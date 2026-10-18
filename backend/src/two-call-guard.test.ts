@@ -8,7 +8,11 @@ import { initializeTwoCallGuard, getTwoCallGuardState, getTwoCallAiRuntimeSha256
   reserveTwoCallTransport, assertTwoCallStage, TwoCallGuardError,
   type TwoCallGuardConfig } from "./two-call-guard";
 
-beforeEach(()=>{ db.prepare("DELETE FROM two_call_guard_phases").run(); db.prepare("DELETE FROM two_call_guard").run(); });
+beforeEach(()=>{
+  db.prepare("DELETE FROM two_call_guard_phases").run(); db.prepare("DELETE FROM two_call_guard").run();
+  // This frozen guard authorizes at most 35 seconds; the current unguarded default is 90 seconds.
+  vi.stubEnv("DEEPWE_PRIVATE_TIMEOUT_MS", "35000");
+});
 afterEach(()=>{ vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); });
 function setup(parentHistory?: "closed_n1_20261010") {
   const user=createUser(`${crypto.randomUUID()}@two-call.test`,"合成两阶段用户","hash","salt");
@@ -28,7 +32,11 @@ function transport(jobId:string,phase:"reply"|"audit") {
     endpoint:"https://api.deepseek.com/chat/completions",maxTokens:8192,requestBytes:1000,
     thinking:true,reasoningEffort:"high",timeoutMs:35000};
 }
-function response(text:string) { return new Response(JSON.stringify({choices:[{finish_reason:"stop",message:{content:text}}]}),{status:200}); }
+function response(text:string,init?:RequestInit) {
+  const body=init?JSON.parse(String(init.body)) as {response_format?:{type:string}}:undefined;
+  const content=body?.response_format?.type==="json_object"?JSON.stringify({segments:[{kind:"narration",text}]}):text;
+  return new Response(JSON.stringify({choices:[{finish_reason:"stop",message:{content}}]}),{status:200});
+}
 
 describe("持久两阶段产品保护",()=>{
   it("从已关N1实际父14/1接续，不释放历史unknown或重新记成11",()=>{
@@ -91,7 +99,7 @@ describe("持久两阶段产品保护",()=>{
   it("正常worker仅reply和audit，入库后notes保持queued且重启不破坏completed",async()=>{
     vi.stubEnv("DEEPSEEK_API_KEY","synthetic-test-key");vi.stubEnv("DEEPWE_PRIVATE_PROVIDER","deepseek");
     const {user,conversation,source}=setup();
-    const fetch=vi.fn(async()=>response("你可以继续说说你想澄清的部分。"));vi.stubGlobal("fetch",fetch);
+    const fetch=vi.fn(async(_url:unknown,init?:RequestInit)=>response("你可以继续说说你想澄清的部分。",init));vi.stubGlobal("fetch",fetch);
     wakePrivateWorker();
     await vi.waitFor(()=>expect(core.getPrivateJob(user.id,conversation.id,source.jobId!)?.status).toBe("completed"),{timeout:3000});
     expect(fetch).toHaveBeenCalledTimes(2);
@@ -114,7 +122,7 @@ describe("持久两阶段产品保护",()=>{
     const observed:Array<{snapshotCount:number;aborted:boolean}> = [];
     const fetch=vi.fn(async(_url:string|URL|Request,init?:RequestInit)=>{
       observed.push({snapshotCount:completedSnapshots,aborted:Boolean(init?.signal?.aborted)});
-      return response("你可以继续说说你想澄清的部分。");
+      return response("你可以继续说说你想澄清的部分。",init);
     });vi.stubGlobal("fetch",fetch);
     wakePrivateWorker();
     await vi.waitFor(()=>expect(core.getPrivateJob(user.id,conversation.id,source.jobId!)?.status).toBe("completed"),{timeout:3000});
@@ -133,5 +141,16 @@ describe("持久两阶段产品保护",()=>{
     await vi.waitFor(()=>expect(core.getPrivateJob(user.id,conversation.id,source.jobId!)?.status).toBe("failed"),{timeout:3000});
     core.requeueInterruptedPrivateJobs();wakePrivateWorker();await new Promise(resolve=>setTimeout(resolve,0));
     expect(fetch).toHaveBeenCalledTimes(1);expect(getTwoCallGuardState()).toMatchObject({state:"stopped",parent_post_count:12,reserved_nano:19200000});
+  });
+  it("90秒默认配置超过旧保护上限时在发送和预占前拒绝",async()=>{
+    vi.stubEnv("DEEPSEEK_API_KEY","synthetic-test-key");vi.stubEnv("DEEPWE_PRIVATE_PROVIDER","deepseek");
+    vi.stubEnv("DEEPWE_PRIVATE_TIMEOUT_MS","90000");
+    vi.spyOn(console,"error").mockImplementation(()=>undefined);
+    const {user,conversation,source}=setup();
+    const fetch=vi.fn();vi.stubGlobal("fetch",fetch);
+    wakePrivateWorker();
+    await vi.waitFor(()=>expect(core.getPrivateJob(user.id,conversation.id,source.jobId!)?.status).toBe("failed"),{timeout:3000});
+    expect(fetch).not.toHaveBeenCalled();
+    expect(getTwoCallGuardState()).toMatchObject({state:"stopped",parent_post_count:11,reserved_nano:0,phases:[]});
   });
 });
