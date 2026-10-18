@@ -1,0 +1,19 @@
+name: 产品建议 / Feature request
+description: 说说具体场景、遇到的问题和希望得到的帮助。
+title: "[Idea] "
+body:
+  - type: markdown
+    attributes:
+      value: "请使用虚构例子，不要公开个人关系文本、账号或其他敏感资料。"
+  - type: textarea
+    id: problem
+    attributes:
+      label: 在什么场景里遇到了什么问题
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 希望体验怎样改变
+    validations:
+      required: true

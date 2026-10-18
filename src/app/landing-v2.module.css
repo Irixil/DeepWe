@@ -1,0 +1,383 @@
+@font-face {
+  font-family: "DeepWe Smiley";
+  src: url("/fonts/SmileySans-Oblique.otf.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.landing {
+  --ink: var(--dw-ink);
+  --ink-soft: #525b5b;
+  --blue: var(--dw-current);
+  --blue-deep: var(--dw-current-deep);
+  --sky: var(--dw-current-surface);
+  --green: var(--dw-clothing-green);
+  --coral: var(--dw-coral);
+  --lavender: var(--dw-lavender);
+  --yellow: var(--dw-yellow);
+  --canvas: var(--dw-cream);
+  --paper: var(--dw-paper);
+  --wave-rear: #b7d5fa;
+  --wave-middle: #5f9ae8;
+  --wave-crest: #1065e3;
+  --wave-front: #003094;
+  min-height: 100dvh;
+  overflow: clip;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-inter), "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.landing ::selection { background: #9bd7ff; color: #073c92; }
+.landing a,
+.landing summary { -webkit-tap-highlight-color: transparent; }
+.landing a:focus-visible,
+.landing summary:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+.landing svg { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.9; }
+
+.navWrap {
+  position: fixed;
+  z-index: 100;
+  top: 18px;
+  left: 50%;
+  display: grid;
+  width: min(calc(100% - 36px), 1480px);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  transform: translateX(-50%);
+}
+
+.navMain,
+.navEntry {
+  min-height: 68px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 9px 22px rgba(11, 55, 105, 0.09);
+}
+
+.navMain {
+  display: grid;
+  padding: 9px 12px 9px 25px;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 52px);
+}
+
+.logoLink { display: inline-flex; min-height: 44px; align-items: center; color: inherit !important; text-decoration: none; }
+.logo { display: inline-flex; align-items: baseline; gap: 6px; color: var(--blue); line-height: 1; white-space: nowrap; }
+.logo > span { font-family: var(--font-display), sans-serif; font-size: 26px; font-weight: 790; letter-spacing: -0.035em; }
+.logo small { font-size: 12px; font-weight: 800; letter-spacing: 0.03em; }
+.logoLight { color: #fff; }
+
+.navMain nav { display: flex; justify-content: center; align-items: center; gap: clamp(21px, 2.6vw, 42px); }
+.navMain nav a { position: relative; display: inline-flex; min-height: 44px; align-items: center; color: #173549; font-size: 14px; font-weight: 740; text-decoration: none; }
+.navMain nav a::after { position: absolute; right: 0; bottom: -7px; left: 0; height: 2px; background: var(--blue); content: ""; transform: scaleX(0); transform-origin: right; transition: transform 200ms var(--dw-ease-out); }
+.navMain nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+.subscription { padding-left: 21px; border-left: 1px solid #dce4e7; color: #6e7e86; font-size: 12px; font-weight: 650; white-space: nowrap; }
+
+.navEntry {
+  display: inline-flex;
+  min-width: 210px;
+  padding: 0 25px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--blue);
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: 790;
+  text-decoration: none;
+  transition: background 180ms ease, transform 180ms var(--dw-ease-out), box-shadow 180ms ease;
+}
+.navEntry:hover { background: var(--blue-deep); box-shadow: 0 13px 30px rgba(12, 54, 105, 0.18); transform: translateY(-2px); }
+.navEntry svg { transition: transform 180ms var(--dw-ease-out); }
+.navEntry:hover svg { transform: translateX(4px); }
+
+.navMenu { position: relative; }
+.navMenu summary { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 50%; background: #dcedff; color: var(--blue-deep); cursor: pointer; list-style: none; }
+.navMenu summary::-webkit-details-marker { display: none; }
+.navMenu > div { position: absolute; top: 56px; right: 0; display: grid; width: 220px; padding: 12px; gap: 3px; border-radius: 14px; background: #fff; box-shadow: 0 18px 42px rgba(20, 44, 59, 0.16); }
+.navMenu > div a,
+.navMenu > div span { display: flex; min-height: 44px; padding: 10px 12px; align-items: center; border-radius: 9px; color: var(--ink); font-size: 14px; text-decoration: none; }
+.navMenu > div a:hover { background: #eaf4ff; }
+.navMenu > div span { color: #6e7e86; font-size: 12px; }
+
+.waterNarrative { position: relative; background: var(--canvas); isolation: isolate; }
+.openingSequence { position: relative; z-index: 1; height: 320dvh; background: var(--canvas); }
+.openingSticky { position: sticky; top: 0; height: 100svh; overflow: visible; background: var(--canvas); isolation: isolate; }
+
+.heroCopy { position: absolute; z-index: 10; top: 27%; left: clamp(112px, 9vw, 146px); width: min(58vw, 860px); transform-origin: left center; will-change: transform; }
+.heroCopy h1 { margin: 0; color: #0038a0; font-family: var(--font-display), sans-serif; font-size: clamp(110px, 11.1vw, 174px); font-weight: 800; letter-spacing: -0.045em; line-height: 0.82; }
+.heroCopy p { margin: 38px 0 24px; color: #0038a0; font-family: "DeepWe Smiley", var(--font-display), sans-serif; font-size: clamp(38px, 3.6vw, 56px); line-height: 1.08; }
+.heroCopy span { display: block; max-width: 590px; margin-top: 8px; color: var(--ink-soft); font-size: clamp(16px, 1.25vw, 19px); font-weight: 560; line-height: 1.72; }
+
+.oceanStage { position: absolute; inset: 0; z-index: 12; transform-origin: center bottom; }
+.boatScene { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.boatRig { position: absolute; z-index: 2; right: -1vw; bottom: 5vh; width: min(49vw, 720px); aspect-ratio: 3 / 2; }
+.boatRide { position: absolute; inset: 0; z-index: 2; transform-origin: 55% 72%; }
+.boat { position: absolute; inset: 0; z-index: 3; }
+.heroCouple { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; pointer-events: none; }
+.heroFrontFoot { z-index: 3; }
+.openingClouds { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.landing .openingClouds svg { position: absolute; height: auto; fill: #fff; stroke: none; }
+.landing .openingCloudFar { top: 16%; left: 69%; width: 25%; }
+.landing .openingCloudNear { top: 48%; left: 50%; width: 12%; }
+.landing .openingCloudSmall { top: 11%; left: 25%; width: 11%; }
+.landing .boat svg { display: block; width: 100%; height: 100%; stroke: none; fill: #000; }
+@media (max-width: 620px) { .landing .openingClouds svg { transform: none !important; } .landing .openingCloudSmall { display: none; } .landing .openingCloudFar { top: 20%; left: 70%; width: 36%; } }
+.boat img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+.landing .openingWater { position: absolute; top: 0; left: 0; display: block; width: 100%; height: calc(100svh + 4700px); overflow: visible; pointer-events: none; }
+.landing .openingWaterBackLayer { z-index: 1; height: 100svh; overflow: hidden; }
+.landing .openingWaterCrestLayer { z-index: 3; height: 100svh; overflow: hidden; }
+.landing .openingWaterFrontLayer { z-index: 5; }
+.landing .openingWaterMain { fill: var(--wave-front); stroke: none; }
+.landing .openingWaterBack,
+.landing .openingWaterMiddle,
+.landing .openingWaterCrest { stroke: none; }
+.landing .openingWaterBack { fill: var(--wave-rear); }
+.landing .openingWaterMiddle { fill: var(--wave-middle); }
+.landing .openingWaterCrest { fill: var(--wave-crest); }
+
+.landing .waterContinuation { overflow: visible; }
+.landing .systemStream { fill: none; stroke: var(--wave-front); stroke-linejoin: round; }
+.landing .systemMain { stroke-width: 220px; }
+.landing .systemBranch { stroke-width: 110px; }
+
+.storyJourney { position: relative; z-index: 20; min-height: 4700px; overflow: hidden; background: transparent; isolation: isolate; }
+.storyJourney::before { position: absolute; top: 16%; right: -11vw; z-index: -1; width: 32vw; aspect-ratio: 1; border: 2px solid rgba(255, 111, 97, 0.16); border-radius: 50%; content: ""; }
+.storyJourney::after { position: absolute; bottom: 12%; left: -10vw; z-index: -1; width: 30vw; aspect-ratio: 1; border: 2px solid rgba(221, 183, 255, 0.22); border-radius: 50%; content: ""; }
+.journeyIntro { position: relative; z-index: 3; display: grid; min-height: 650px; padding: 160px max(24px, calc((100vw - 1180px) / 2)) 90px; align-content: start; justify-items: end; text-align: right; }
+.journeyIntro h2,
+.businessDialog h2,
+.boundarySection h2,
+.finalSection h2 { margin: 0; font-family: "DeepWe Smiley", var(--font-display), sans-serif; font-weight: 400; letter-spacing: -0.03em; text-wrap: balance; }
+.journeyIntro h2 { max-width: 620px; color: var(--ink); font-size: clamp(52px, 5.4vw, 78px); line-height: 1.02; }
+.journeyIntro p { max-width: min(420px, 42vw); margin: 27px 0 0; color: var(--ink-soft); font-size: clamp(16px, 1.3vw, 19px); line-height: 1.75; }
+
+.storyScenes { position: relative; z-index: 2; width: min(calc(100% - 48px), 1380px); margin: 0 auto; }
+.storyScene { position: relative; display: grid; min-height: 1010px; grid-template-columns: minmax(0, 1.16fr) minmax(410px, 0.84fr); align-items: center; gap: clamp(26px, 4vw, 72px); scroll-margin-top: 110px; }
+.storyScene:not(.sceneReverse) .businessDialog { grid-column: 2; justify-self: end; }
+.sceneReverse .businessDialog { grid-column: 1; justify-self: start; }
+.sceneCharacter { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.landing .sceneFigure { position: absolute; top: 50%; left: 50%; width: min(650px, 47vw); height: auto; transform: translate(-50%, -50%); }
+.landing .sceneFigure :where(path, circle, rect) { stroke: none; }
+.landing .sceneFigure .figureLine { fill: none; stroke: #233037; stroke-linecap: round; stroke-width: 5; }
+.storyScene[data-scene="listen"] .sceneFigure { top: 51%; left: 35%; width: min(510px, 36vw); }
+.storyScene[data-scene="couple"] .sceneFigure { top: 50%; left: 55%; width: min(760px, 53vw); }
+.storyScene[data-scene="understand"] .sceneFigure { top: 51%; left: 46%; width: min(640px, 45vw); }
+.storyScene[data-scene="records"] .sceneFigure { top: 51%; left: 66%; width: min(680px, 48vw); }
+.limbMotionA,
+.limbMotionB { transform-box: fill-box; transform-origin: 50% 10%; }
+.limbMotionA { animation: limbSwingA 4.8s ease-in-out infinite alternate; }
+.limbMotionB { animation: limbSwingB 5.4s ease-in-out -2.1s infinite alternate; }
+
+.businessDialog { position: relative; z-index: 3; width: min(100%, 500px); padding: clamp(31px, 4vw, 48px); border-radius: 14px; background: var(--paper); box-shadow: 0 13px 34px rgba(20, 44, 59, 0.11); }
+.dialogLabel { color: var(--blue); font-size: 15px; font-weight: 820; letter-spacing: 0.02em; }
+.businessDialog h2 { margin-top: 24px; color: var(--ink); font-size: clamp(38px, 3.7vw, 54px); line-height: 1.08; }
+.businessDialog > p { margin: 25px 0 0; color: var(--ink-soft); font-size: 16px; line-height: 1.8; }
+.businessDialog > small { position: relative; display: block; margin-top: 22px; padding-left: 17px; color: #536c79; font-size: 13px; line-height: 1.62; }
+.businessDialog > small::before { position: absolute; top: 0.62em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--sky); content: ""; }
+.businessDialog > a,
+.finalSection > a { display: inline-flex; min-height: 58px; margin-top: 31px; padding: 0 8px 0 20px; align-items: center; gap: 15px; border-radius: 13px; background: var(--blue); color: #fff !important; font-size: 14px; font-weight: 790; text-decoration: none; transition: background 180ms ease, transform 180ms var(--dw-ease-out); }
+.businessDialog > a i,
+.finalSection > a i { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: #fff; color: var(--blue); transition: transform 180ms var(--dw-ease-out); }
+.businessDialog > a:hover,
+.finalSection > a:hover { background: var(--blue-deep); transform: translateY(-2px); }
+.businessDialog > a:hover i,
+.finalSection > a:hover i { transform: translateX(3px); }
+
+.boundarySection { position: relative; z-index: 5; display: grid; min-height: 850px; padding: 150px max(28px, calc((100vw - 1240px) / 2)); grid-template-columns: minmax(0, 1.06fr) minmax(390px, 0.94fr); align-items: center; gap: clamp(60px, 9vw, 130px); overflow: hidden; background: var(--wave-front); }
+.boundarySection::before { position: absolute; right: -8%; bottom: -28%; width: 46vw; aspect-ratio: 1; border: 72px solid rgba(123, 184, 237, 0.09); border-radius: 50%; content: ""; }
+.boundarySection h2 { color: #fffaf0; font-size: clamp(45px, 5vw, 70px); line-height: 1.05; }
+.boundaryCopy > p { max-width: 650px; margin: 29px 0 0; color: #c9def5; font-size: 16px; line-height: 1.85; }
+.boundarySection ul { position: relative; display: grid; margin: 0; padding: 0; gap: 13px; list-style: none; }
+.boundarySection li { display: flex; min-height: 112px; padding: 21px 23px; align-items: center; gap: 18px; border-radius: 14px; background: #fffaf0; box-shadow: 0 10px 24px rgba(0, 22, 72, 0.12); }
+.boundarySection li > i { display: grid; flex: 0 0 auto; width: 46px; height: 46px; place-items: center; border-radius: 50%; background: #e5f2ff; color: var(--blue); font-size: 12px; font-style: normal; font-weight: 820; }
+.boundarySection li:nth-child(2) > i { background: #fff0ec; color: #c94f40; }
+.boundarySection li:nth-child(3) > i { background: #f1eafd; color: #674493; }
+.boundarySection li span { display: grid; gap: 6px; }
+.boundarySection li strong { color: #163b61; font-size: 15px; }
+.boundarySection li small { color: #49617a; font-size: 13px; line-height: 1.52; }
+
+.finalSection { position: relative; display: grid; min-height: 760px; padding: 130px 24px; place-content: center; justify-items: center; overflow: hidden; background: var(--blue); color: #fff; text-align: center; isolation: isolate; }
+.finalSection::before { position: absolute; top: -26%; left: 50%; z-index: -1; width: 720px; height: 720px; border: 74px solid rgba(133, 207, 255, 0.24); border-radius: 50%; content: ""; transform: translateX(-50%); }
+.finalSection::after { position: absolute; right: -8%; bottom: -31%; z-index: -1; width: 470px; height: 470px; border-radius: 50%; background: rgba(221, 183, 255, 0.22); content: ""; }
+.finalSection h2 { max-width: 950px; margin-top: 37px; font-size: clamp(51px, 6vw, 84px); line-height: 1.02; }
+.finalSection > p { max-width: 600px; margin: 26px 0 0; color: #e4f2ff; font-size: 17px; line-height: 1.7; }
+.finalSection > a { margin-top: 35px; background: #fff; color: var(--blue-deep) !important; }
+.finalSection > a i { background: var(--blue); color: #fff; }
+.finalSection > a:hover { background: #fff7d1; color: var(--blue-deep) !important; }
+.finalSection > span { margin-top: 24px; color: #cae6ff; font-size: 12px; }
+
+.footer { display: grid; min-height: 150px; padding: 37px max(24px, calc((100vw - 1240px) / 2)); grid-template-columns: auto 1fr auto; align-items: center; gap: 27px; background: var(--paper); color: #536f7c; }
+.footer p,
+.footer small { margin: 0; font-size: 12px; line-height: 1.55; }
+.footer small { text-align: right; }
+
+@keyframes backWaveDrift { 0%, 100% { transform: translate3d(-18px, 5px, 0); } 50% { transform: translate3d(16px, -3px, 0); } }
+@keyframes middleWaveDrift { 0%, 100% { transform: translate3d(14px, 3px, 0); } 50% { transform: translate3d(-18px, -6px, 0); } }
+@keyframes crestWaveDrift { 0%, 100% { transform: translate3d(-10px, 3px, 0); } 50% { transform: translate3d(12px, -7px, 0); } }
+@keyframes limbSwingA { from { transform: rotate(-1.2deg) translateY(0); } to { transform: rotate(1.8deg) translateY(-2px); } }
+@keyframes limbSwingB { from { transform: rotate(1deg) translateY(-1px); } to { transform: rotate(-1.6deg) translateY(2px); } }
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .landing .openingWaterBack { animation: backWaveDrift 7.6s ease-in-out infinite; }
+  .landing .openingWaterMiddle { animation: middleWaveDrift 6.4s ease-in-out -2.2s infinite; }
+  .landing .openingWaterCrest { animation: crestWaveDrift 5.8s ease-in-out infinite; }
+}
+
+@media (max-width: 1160px) {
+  .subscription { display: none; }
+  .navMain { grid-template-columns: auto 1fr auto; }
+  .boatRig { right: -7vw; width: 58vw; }
+  .heroCopy { left: 5vw; width: 50vw; }
+  .storyScene { grid-template-columns: minmax(0, 1fr) minmax(380px, 0.88fr); }
+}
+
+@media (max-width: 900px) {
+  .navWrap { top: 12px; width: calc(100% - 22px); gap: 9px; }
+  .navMain,
+  .navEntry { min-height: 60px; border-radius: 14px; }
+  .navMain { padding: 7px 8px 7px 17px; grid-template-columns: 1fr auto; }
+  .navMain nav { display: none; }
+  .navEntry { min-width: 150px; padding: 0 16px; font-size: 13px; }
+  .navMenu summary { width: 44px; height: 44px; }
+  .logo > span { font-size: 23px; }
+  .openingSequence { height: 350dvh; }
+  .heroCopy { top: 15%; left: 7vw; width: 86vw; }
+  .heroCopy h1 { font-size: clamp(68px, 16vw, 104px); }
+  .heroCopy p { margin-top: 26px; font-size: clamp(31px, 7vw, 45px); }
+  .boatRig { right: -17vw; bottom: 8vh; width: 83vw; }
+  .storyJourney { min-height: 4580px; }
+  .journeyIntro { min-height: 620px; padding-top: 150px; }
+  .storyScene,
+  .sceneReverse { min-height: 990px; padding: 44px 0 76px; grid-template-columns: 1fr; gap: 4px; }
+  .storyScene:not(.sceneReverse) .businessDialog,
+  .sceneReverse .businessDialog { grid-column: 1; justify-self: center; }
+  .landing .sceneFigure,
+  .storyScene[data-scene="listen"] .sceneFigure,
+  .storyScene[data-scene="couple"] .sceneFigure,
+  .storyScene[data-scene="understand"] .sceneFigure,
+  .storyScene[data-scene="records"] .sceneFigure { top: 33%; left: 50%; width: 620px; }
+  .storyScene[data-scene="listen"] .sceneFigure { width: 430px; }
+  .storyScene[data-scene="couple"] .sceneFigure { width: 640px; }
+  .storyScene[data-scene="understand"] .sceneFigure { width: 560px; }
+  .storyScene[data-scene="records"] .sceneFigure { width: 570px; }
+  .businessDialog { width: min(100%, 620px); margin: 0 auto; align-self: center; }
+  .boundarySection { padding: 120px 7vw; grid-template-columns: 1fr; gap: 56px; }
+}
+
+@media (max-width: 620px) {
+  .navEntry { min-width: 126px; padding: 0 13px; }
+  .navEntry svg { display: none; }
+  .logo small { display: none; }
+  .heroCopy { top: 14%; }
+  .heroCopy h1 { font-size: 70px; }
+  .heroCopy p { margin: 24px 0 17px; font-size: 34px; }
+  .heroCopy span { font-size: 15px; line-height: 1.62; }
+  .boatRig { right: -18vw; bottom: 11vh; width: 104vw; }
+  .storyScenes { width: calc(100% - 28px); }
+  .journeyIntro { min-height: 580px; padding: 132px 20px 70px; justify-items: start; text-align: left; }
+  .journeyIntro h2 { font-size: 47px; }
+  .journeyIntro p { position: relative; padding: 14px 16px; border-radius: 12px; background: rgba(248, 244, 234, 0.96); }
+  .storyScene { min-height: 940px; }
+  .landing .sceneFigure,
+  .storyScene[data-scene="listen"] .sceneFigure,
+  .storyScene[data-scene="couple"] .sceneFigure,
+  .storyScene[data-scene="understand"] .sceneFigure,
+  .storyScene[data-scene="records"] .sceneFigure { top: 30%; left: 50%; width: 430px; }
+  .storyScene[data-scene="listen"] .sceneFigure { width: 330px; }
+  .storyScene[data-scene="couple"] .sceneFigure { width: 430px; }
+  .storyScene[data-scene="understand"] .sceneFigure { width: 390px; }
+  .storyScene[data-scene="records"] .sceneFigure { width: 410px; }
+  .businessDialog { padding: 29px 25px 31px; }
+  .businessDialog h2 { font-size: 38px; }
+  .businessDialog > p { font-size: 15px; }
+  .businessDialog > a { min-height: 56px; }
+  .boundarySection { padding: 105px 20px; }
+  .boundarySection h2 { font-size: 45px; }
+  .finalSection { min-height: 690px; }
+  .finalSection h2 { font-size: clamp(49px, 2.55vw, 65px); }
+  .footer { padding: 32px 22px; grid-template-columns: 1fr; gap: 12px; }
+  .footer small { text-align: left; }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .navWrap { top: 8px; }
+  .navMain,
+  .navEntry { min-height: 54px; }
+  .heroCopy { top: 21%; width: 45vw; }
+  .heroCopy h1 { font-size: 64px; }
+  .heroCopy p { margin: 18px 0 12px; font-size: 28px; }
+  .heroCopy span { font-size: 13px; line-height: 1.5; }
+  .boatRig { right: -1vw; bottom: 7vh; width: 49vw; }
+}
+
+@media (pointer: coarse) {
+  .navMain nav a,
+  .businessDialog > a,
+  .finalSection > a { min-height: 48px; }
+}
+
+/* One story measure shared with water-flow.mjs. Cards sit in the quiet
+   outside of each bend; they no longer drift independently of the stream. */
+.liquidWorld { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.landing .liquidSurface { position: absolute; top: 0; left: 0; display: block; width: 100%; height: auto; overflow: visible; stroke: none; }
+.waterIntro { position: absolute; z-index: 1; top: 118vh; left: 50%; width: min(760px, 84vw); margin-left: max(-380px, -42vw); text-align: center; color: #fff; pointer-events: none; }
+.waterIntro h2 { margin: 0; font-family: "DeepWe Smiley", var(--font-display), sans-serif; font-weight: 400; font-size: clamp(48px, 5.3vw, 76px); line-height: 1.18; letter-spacing: -0.025em; }
+.waterIntro p { max-width: 660px; margin: 28px auto 0; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.85; color: #e1efff; }
+.seaLife { position: relative; width: clamp(230px, 23vw, 300px); margin: 36px 0 0 3%; }
+.landing .fishSchool { display: block; width: 100%; height: auto; fill: none; stroke: none; animation: fishDrift 5s ease-in-out infinite; animation-play-state: paused; }
+.landing .seaBubbles { position: absolute; top: -14px; left: -24px; width: 45px; height: 82px; fill: none; stroke: #b7d7fa; stroke-width: 2; animation: bubblesDrift 5s ease-in-out infinite; animation-play-state: paused; }
+.seaLife[data-visible="true"] .fishSchool, .seaLife[data-visible="true"] .seaBubbles { animation-play-state: running; }
+@keyframes fishDrift { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+@keyframes bubblesDrift { 0%,100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(-12px); opacity: .8; } }
+.landing .storyJourney { height: 3000px; min-height: 3000px; margin-top: -48vh; overflow: visible; }
+.landing .storyJourney::before, .landing .storyJourney::after { content: none; }
+.landing .storyScenes { height: 100%; width: calc(100% - 12vw); }
+.landing .storyScene { position: absolute; width: 100%; min-height: 0; padding: 0; grid-template-columns: 1fr 1fr; transform: translateY(-50%); gap: 8%; }
+.landing .businessDialog { width: min(100%, 470px); margin: 0; padding: 36px 38px; box-shadow: 0 16px 40px rgba(20,44,59,.065); }
+.landing .businessDialog h2 { font-size: clamp(34px, 3vw, 46px); line-height: 1.22; }
+.landing .businessDialog > p { font-size: 17px; line-height: 1.8; }
+@media (min-width: 1900px) {
+  .landing .businessDialog { width: min(100%, clamp(560px, 29.2vw, 750px)); padding: clamp(42px, 2.2vw, 56px) clamp(46px, 2.4vw, 61px); }
+  .landing .businessDialog h2 { font-size: 49px; }
+  .landing .businessDialog > p { font-size: clamp(19px, .99vw, 25px); }
+  .landing .businessDialog > small { font-size: clamp(15px, .78vw, 20px); }
+  .landing .businessDialog > a { font-size: clamp(17px, .9vw, 23px); min-height: clamp(60px, 3.125vw, 80px); }
+  .waterIntro { width: 850px; margin-left: -425px; }
+  .waterIntro h2 { font-size: 86px; }
+  .waterIntro p { max-width: 760px; font-size: 22px; }
+}
+.reducedIntro { display: none; }
+@media (max-width: 900px) {
+  .landing .storyJourney { height: 3400px; min-height: 3400px; }
+  .landing .storyScenes { width: calc(100% - 32px); }
+  .landing .storyScene { display: flex; transform: translateY(-18%); }
+  .landing .storyScene:not(.sceneReverse) { justify-content: flex-end; }
+  .landing .sceneReverse { justify-content: flex-start; }
+  .landing .businessDialog { width: 71%; padding: 28px 25px; }
+  .landing .businessDialog h2 { font-size: clamp(28px, 4vw, 38px); }
+  .landing .businessDialog > p { font-size: 16px; }
+  .waterIntro { width: 86vw; margin-left: -43vw; }
+  .waterIntro h2 { font-size: clamp(32px, 7vw, 54px); }
+  .waterIntro p { margin-top: 22px; font-size: 16px; line-height: 1.75; }
+  .seaLife { width: 200px; margin-top: 28px; margin-left: 0; }
+  .landing .seaBubbles { width: 34px; left: -14px; }
+  .desktopBreak { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .openingSequence { height: 100svh !important; min-height: 100svh; max-height: 100svh; }
+  .waterIntro { display: none; }
+  .liquidWorld { transform: none !important; }
+  .landing .storyJourney { padding-top: 48vh; margin-top: 0; box-sizing: content-box; }
+  .reducedIntro { display: block; position: absolute; top: 0; left: 0; right: 0; padding: 32px 24px; text-align: center; color: white; background: var(--wave-front); }
+  .reducedIntro h2 { font-size: 32px; margin: 0 0 16px; }
+  .reducedIntro p { max-width: 660px; margin: auto; line-height: 1.7; }
+}

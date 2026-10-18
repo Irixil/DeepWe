@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 官网 / Website
+    url: https://s2fslv06rel2qvptljhke.apigateway-cn-beijing.volceapi.com/
+    about: 了解并体验 DeepWe 深蓝。
+  - name: 私下报告安全问题 / Security report
+    url: https://github.com/Irixil/DeepWe/security/advisories/new
+    about: 不要在公开 Issue 中披露可利用细节或个人数据。

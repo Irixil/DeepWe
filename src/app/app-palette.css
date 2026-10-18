@@ -1,0 +1,77 @@
+/* Internal UI only: same action blue as the approved homepage.
+   Keep these roles scoped; homepage illustration colors must never inherit them. */
+:is(.deepwe-app-shell, .deepwe-event-shell) {
+  --app-primary: #0b63ef;
+  --app-primary-hover: #004dcc;
+  --app-depth: #003094;
+  --app-canvas: #edf4ff;
+  --app-paper: #fffdf8;
+  --app-white: #ffffff;
+  --app-soft: #e8f0ff;
+  --app-mist: #f4f7ff;
+  --app-border: #c2d4ef;
+  --app-field-border: #738eb5;
+  --app-ink: #163b61;
+  --app-body: #385579;
+  --app-muted: #536b8a;
+  --app-on-dark: #e3eeff;
+  --app-coral: #ad5148;
+  --app-coral-soft: #fff0e9;
+  --app-warning: #8c531c;
+  --app-warning-soft: #fff3df;
+  --app-error: #ad354a;
+  --app-error-soft: #ffedf0;
+  --app-success: #246747;
+  --app-success-soft: #e9f5ee;
+  --color-primary: var(--app-primary);
+  --color-primary-hover: var(--app-primary-hover);
+  --color-primary-soft: var(--app-soft);
+  --color-accent: var(--app-coral);
+  --color-accent-soft: var(--app-coral-soft);
+  --color-bg: var(--app-canvas);
+  --color-surface: var(--app-paper);
+  --color-muted: var(--app-muted);
+  color: var(--app-ink);
+  accent-color: var(--app-primary);
+  caret-color: var(--app-primary);
+  scrollbar-color: #7b96bd #edf4ff;
+}
+
+body:has(.deepwe-event-shell, .deepwe-app-shell) { background: #edf4ff; }
+
+:is(.deepwe-app-shell, .deepwe-event-shell) .bg-white { background-color: var(--app-paper) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.bg-slate-50, .bg-slate-100) { background-color: var(--app-mist) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) .bg-sky-50 { background-color: var(--app-soft) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.border-slate-100, .border-slate-200, .border-slate-300, .border-sky-100, .border-sky-200) { border-color: var(--app-border) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.ring-slate-100, .ring-slate-200) { --tw-ring-color: var(--app-border) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-slate-900, .text-slate-800) { color: var(--app-ink) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-slate-700, .text-slate-600) { color: var(--app-body) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-slate-500, .text-slate-400, .text-slate-300) { color: var(--app-muted) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.bg-slate-800\/90, .bg-slate-900) { background-color: var(--app-depth) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) .hover\:bg-slate-800:hover { background-color: #002570 !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) .hover\:bg-sky-50:hover { background-color: var(--app-soft) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) .hover\:text-primary:hover { color: var(--app-primary) !important; }
+
+/* Semantic feedback remains distinct; green is never the app's structural color. */
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.bg-amber-50, .bg-\[\#fff7ed\]) { background-color: var(--app-warning-soft) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-amber-800, .text-amber-700, .text-amber-600) { color: var(--app-warning) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) .bg-rose-50 { background-color: var(--app-error-soft) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-rose-700, .text-rose-600) { color: var(--app-error) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.bg-emerald-50, .bg-emerald-100) { background-color: var(--app-success-soft) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(.text-emerald-800, .text-emerald-700, .text-emerald-600) { color: var(--app-success) !important; }
+
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(input, textarea, select)[class] {
+  color: var(--app-ink);
+  border-color: var(--app-field-border) !important;
+}
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(input, textarea)::placeholder { color: var(--app-muted); opacity: 1; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(input, textarea, select):focus { border-color: var(--app-primary) !important; }
+:is(.deepwe-app-shell, .deepwe-event-shell) :is(button, a, input, textarea, select):focus-visible {
+  outline: 2px solid var(--app-primary);
+  outline-offset: 3px;
+}
+:is(.deepwe-app-shell, .deepwe-event-shell) ::selection { background: #c5dbff; color: #163b61; }
+
+@media (min-width: 720px) {
+  .deepwe-app-shell nav button:focus-visible { outline-color: var(--app-white); }
+}

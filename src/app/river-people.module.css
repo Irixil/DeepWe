@@ -1,0 +1,48 @@
+.oceanLife { position: absolute; top: 0; left: 0; width: 100%; height: 220vh; pointer-events: none; }
+.oceanLife .definitions { position: absolute; width: 0; height: 0; }
+.oceanLife svg { position: absolute; display: block; height: auto; stroke: none; fill: none; }
+.oceanLife .nearFish { left: 5%; top: 147vh; width: 25vw; max-width: 500px; }
+.oceanLife .farFish { left: 61%; top: 172vh; width: 13vw; max-width: 250px; transform: scaleX(-1) rotate(8deg); }
+.oceanLife .kelp { left: -4.5%; top: 156vh; width: 19vw; max-width: 360px; }
+.oceanLife .bubbles { width: 4vw; max-width: 72px; fill: none; stroke: #a5ceef; stroke-width: 1.6; }
+.oceanLife .bubblesNear { left: 29%; top: 148vh; }
+.oceanLife .bubblesFar { left: 59%; top: 178vh; transform: scale(.7); }
+.swim { transform-origin: center; animation: quietSwim 7s ease-in-out infinite; }
+.sway { transform-origin: 50% 82%; animation: kelpSway 8s ease-in-out infinite; }
+.bubbles { animation: bubbleRise 6s ease-in-out infinite; }
+.oceanLife :is(.swim,.sway,.bubbles) { animation-play-state: paused; }
+.oceanLife[data-active="true"] :is(.swim,.sway,.bubbles) { animation-play-state: running; }
+.riverPeople { position: absolute; top: 0; left: 0; display: block; width: 100%; height: auto; overflow: visible; stroke: none !important; pointer-events: none; }
+.contactRipple { fill: none; stroke: #7bb8ed; stroke-width: 1.8; opacity: .8; }
+@keyframes quietSwim { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1deg); } }
+@keyframes kelpSway { 0%,100% { transform: skewX(-2deg); } 50% { transform: skewX(2deg); } }
+@keyframes bubbleRise { 0%,100% { translate: 0 0; opacity: .55; } 50% { translate: 0 -14px; opacity: .85; } }
+@media (max-width: 900px) {
+  .oceanLife .nearFish { left: -7%; top: 155vh; width: 52vw; }
+  .oceanLife .farFish { left: 44%; top: 170vh; width: 27vw; }
+  .oceanLife .kelp { left: -15%; top: 161vh; width: 40vw; }
+  .oceanLife .bubblesNear { left: 44%; top: 157vh; width: 7vw; }
+  .oceanLife .bubblesFar { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oceanLife :is(.swim,.sway,.bubbles), .propActivity > g, .contactRipple { animation: none !important; }
+}
+
+/* Default artwork remains visible until its renderer has successfully drawn. */
+.livePerson { visibility: hidden; }
+.person[data-ready="true"] .livePerson { visibility: visible; }
+.person[data-ready="true"] .staticPerson { visibility: hidden; }
+.farFish .swim { animation-duration: 9.3s; animation-delay: -3s; }
+.propActivity > g { transform-box: fill-box; transform-origin: center; animation-play-state: paused; }
+.planeMotion { animation: paperGlide 7.8s ease-in-out infinite; }
+.leafMotion { transform-origin: 50% 95% !important; animation: bankLeaves 9.4s ease-in-out infinite; }
+.paperMotion { animation: noteTurn 8.7s ease-in-out infinite; }
+.propActivity[data-active="true"] > g { animation-play-state: running; }
+[data-prop="1"]:nth-child(3n) .planeMotion { animation-delay: -3.2s; animation-duration: 9.2s; }
+[data-prop="3"]:nth-child(2n) .leafMotion { animation-delay: -4.3s; }
+.person .contactRipple { animation: soleRipple 6.6s ease-in-out infinite paused; transform-box: fill-box; transform-origin: center; }
+.person[data-active="true"] .contactRipple { animation-play-state: running; }
+@keyframes paperGlide { 0%,100% { transform: translate(0,0) rotate(-1deg); } 50% { transform: translate(-28px,-22px) rotate(1deg); } }
+@keyframes bankLeaves { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+@keyframes noteTurn { 0%,100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes soleRipple { 0%,100% { transform: scale(1); opacity: .65; } 50% { transform: scale(1.12,1.08); opacity: .9; } }

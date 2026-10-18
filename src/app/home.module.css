@@ -1,0 +1,992 @@
+.experience {
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  background: #063847;
+}
+
+.storyScreen,
+.productScreen {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  isolation: isolate;
+}
+
+.portraitFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  isolation: isolate;
+  background: #073d53;
+}
+
+.sceneArt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sceneArt:has(.shoreFoamImage) {
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+.sceneImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.sceneImageDesktop {
+  display: none;
+}
+
+.shoreImage,
+.diveImage,
+.deepWorldImage {
+  z-index: 0;
+}
+
+.deepWorldImage {
+  object-position: center bottom;
+  filter: saturate(1.08) brightness(0.72) contrast(1.04);
+}
+
+.shoreFoamImage {
+  z-index: 1;
+  opacity: 0.48;
+  animation: shorelineWash 8s cubic-bezier(0.45, 0.05, 0.3, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.fishLayer {
+  position: absolute;
+  z-index: 2;
+  width: min(46vw, 700px);
+  aspect-ratio: 3 / 2;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.fishLayer img {
+  object-fit: contain;
+}
+
+.fishLayerNear {
+  top: 31%;
+  left: -48vw;
+  opacity: 0.32;
+  animation: fishSwimRight 26s linear infinite;
+}
+
+.fishLayerFar {
+  top: 18%;
+  right: -36vw;
+  width: min(30vw, 450px);
+  opacity: 0.18;
+  transform: scaleX(-1);
+  animation: fishSwimLeft 34s linear 5s infinite;
+}
+
+.shoreTint,
+.diveTint,
+.promiseTint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shoreTint {
+  background:
+    linear-gradient(180deg, rgba(249, 255, 223, 0.12) 0%, transparent 38%),
+    linear-gradient(0deg, rgba(2, 39, 76, 0.34) 0%, transparent 34%);
+}
+
+.diveTint {
+  background:
+    linear-gradient(180deg, rgba(231, 255, 225, 0.2) 0%, transparent 30%),
+    linear-gradient(0deg, rgba(1, 28, 77, 0.45) 0%, transparent 34%);
+}
+
+.promiseTint {
+  background:
+    radial-gradient(circle at 50% 27%, rgba(134, 194, 206, 0.2), transparent 32%),
+    linear-gradient(180deg, rgba(29, 79, 108, 0.28) 0%, rgba(24, 61, 88, 0.64) 60%, rgba(18, 42, 67, 0.9) 100%);
+  backdrop-filter: blur(0.7px);
+}
+
+.wordmark,
+.promiseWordmark {
+  position: absolute;
+  top: max(23px, env(safe-area-inset-top));
+  left: 50%;
+  display: flex;
+  z-index: 4;
+  align-items: baseline;
+  gap: 8px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.brandEnglish {
+  font-size: clamp(17px, 4.8vw, 21px);
+  font-weight: 720;
+  letter-spacing: 0.035em;
+  line-height: 1;
+}
+
+.brandChinese {
+  font-size: 9px;
+  font-weight: 620;
+  letter-spacing: 0.18em;
+  opacity: 0.68;
+}
+
+.wordmarkDark {
+  color: rgba(5, 48, 82, 0.82);
+}
+
+.wordmarkLight {
+  color: rgba(5, 60, 78, 0.88);
+  text-shadow: 0 1px 16px rgba(238, 255, 227, 0.7);
+}
+
+.promiseWordmark {
+  color: rgba(239, 255, 242, 0.92);
+  text-shadow: 0 2px 18px rgba(0, 26, 47, 0.48);
+}
+
+.shoreCopy {
+  position: absolute;
+  right: 7%;
+  left: 7%;
+  z-index: 3;
+  text-align: center;
+}
+
+.shoreCopySand {
+  top: clamp(82px, 11vh, 118px);
+  color: #073e68;
+  text-shadow: 0 1px 20px rgba(255, 255, 255, 0.82);
+}
+
+.shoreCopySea {
+  top: 67%;
+  color: #f5fbff;
+  text-shadow: 0 3px 22px rgba(0, 20, 58, 0.92);
+}
+
+.shoreCopy p,
+.shoreCopy h1 {
+  margin: 0;
+}
+
+.emphasisInline,
+.emphasisDisplay,
+.cueEmphasis {
+  font-style: normal;
+}
+
+.emphasisInline {
+  display: inline-block;
+  margin-inline: 0.06em;
+  font-size: 1.22em;
+  font-weight: 760;
+  line-height: 1;
+  letter-spacing: 0.015em;
+}
+
+.emphasisDisplay {
+  font-size: 1.17em;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+}
+
+.cueEmphasis {
+  display: inline-block;
+  margin-left: 0.08em;
+  color: #fff;
+  font-size: 1.28em;
+  font-weight: 760;
+  line-height: 1;
+}
+
+.shorePrelude {
+  font-size: clamp(15px, 4vw, 19px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.shorePrelude .emphasisInline {
+  color: #052f57;
+  font-size: 1.34em;
+  font-weight: 800;
+}
+
+.shoreTitle {
+  margin-top: 5px !important;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(39px, 11vw, 61px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+}
+
+.shoreClosing {
+  margin-top: 0 !important;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(17px, 4.8vw, 24px);
+  font-weight: 500;
+  line-height: 1.52;
+  letter-spacing: 0.01em;
+}
+
+.shoreClosing .emphasisInline {
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: max(23px, calc(env(safe-area-inset-bottom) + 13px));
+  left: 50%;
+  z-index: 5;
+  display: flex;
+  min-width: 150px;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: rgba(241, 255, 252, 0.9);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-shadow: 0 2px 12px rgba(0, 30, 46, 0.82);
+  cursor: pointer;
+}
+
+.cueLine {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 32px;
+  overflow: hidden;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.cueLine::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: -1px;
+  width: 3px;
+  height: 12px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: cueTravel 2s ease-in-out infinite;
+}
+
+.diveCopy {
+  position: absolute;
+  top: max(75px, calc(env(safe-area-inset-top) + 58px));
+  right: 7%;
+  left: 7%;
+  z-index: 3;
+  color: #063f58;
+  text-align: center;
+  text-shadow: 0 1px 18px rgba(240, 255, 223, 0.78);
+}
+
+.diveKicker {
+  margin: 0 0 9px;
+  color: rgba(4, 83, 100, 0.82);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.28em;
+}
+
+.diveTitle {
+  margin: 0;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(28px, 7.8vw, 47px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.diveTitle .emphasisInline {
+  color: #07354e;
+  font-size: 1.2em;
+  font-weight: 760;
+}
+
+.diveCaption {
+  position: absolute;
+  right: 0;
+  bottom: 99px;
+  left: 0;
+  z-index: 3;
+  margin: 0 auto;
+  color: rgba(225, 243, 255, 0.84);
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 0 2px 14px rgba(0, 16, 28, 0.9);
+}
+
+.diveCaption .emphasisInline {
+  color: #fff;
+  font-size: 1.24em;
+}
+
+.promiseScreen {
+  background: #03233f;
+}
+
+.promiseWordmark {
+  z-index: 4;
+}
+
+.promiseContent {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  left: 8%;
+  z-index: 3;
+  transform: translateY(-48%);
+  color: white;
+  text-align: center;
+}
+
+.promiseKicker {
+  margin: 0 0 16px;
+  color: rgba(176, 221, 224, 0.9);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.23em;
+}
+
+.promiseTitle {
+  margin: 0;
+  color: #f7fffd;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(31px, 8.4vw, 52px);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.045em;
+  text-shadow: 0 3px 24px rgba(0, 12, 23, 0.76);
+}
+
+.promiseBody {
+  max-width: 430px;
+  margin: 22px auto 0;
+  color: rgba(218, 235, 247, 0.8);
+  font-size: 14px;
+  line-height: 1.8;
+  text-wrap: balance;
+}
+
+.principles {
+  display: flex;
+  margin-top: 19px;
+  justify-content: center;
+  gap: 9px;
+  color: rgba(191, 220, 224, 0.86);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+}
+
+.principles i {
+  font-style: normal;
+  opacity: 0.55;
+}
+
+.enterButton {
+  display: inline-flex;
+  min-width: 178px;
+  margin-top: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(193, 209, 203, 0.62);
+  border-radius: 999px;
+  padding: 13px 26px;
+  background: rgba(65, 94, 99, 0.5);
+  color: #eff8ff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.enterButton:hover {
+  transform: translateY(-2px);
+  border-color: rgba(226, 230, 219, 0.88);
+  background: rgba(77, 107, 109, 0.7);
+}
+
+.productScreen {
+  overflow: visible;
+  padding-bottom: clamp(96px, 14vh, 140px);
+  background: var(--app-canvas);
+}
+
+.productScreenApp {
+  padding-bottom: 0;
+  background: var(--app-canvas);
+}
+
+.productInner {
+  display: flex;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 448px;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 46px 24px 48px;
+}
+
+.productHeader {
+  margin-bottom: 26px;
+  color: var(--app-ink);
+  text-align: center;
+  text-shadow: none;
+}
+
+.productWordmark {
+  display: flex;
+  margin: 0 0 13px;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  color: var(--app-depth);
+}
+
+.productHeader h2 {
+  margin: 0;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.productHeader > p:last-child {
+  margin: 7px 0 0;
+  color: var(--app-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.productCard {
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  background: var(--app-paper);
+  box-shadow: 0 24px 70px rgb(0 48 148 / 8%);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+.joinCard {
+  margin-top: 14px;
+}
+
+.productFooter {
+  max-width: 620px;
+  margin: 34px auto 0;
+  color: var(--app-muted);
+}
+
+.productScreenApp .productFooter {
+  margin-top: 0;
+  padding: 0 24px 28px;
+  color: var(--app-muted);
+}
+
+.appProductInner {
+  max-width: 1180px;
+  padding-top: 28px;
+}
+
+.appShell {
+  width: 100%;
+}
+
+.appContent {
+  min-width: 0;
+  padding-bottom: 76px;
+}
+
+.appPageHeader {
+  display: flex;
+  margin-bottom: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--app-ink);
+  text-shadow: none;
+}
+
+.appWordmark {
+  display: flex;
+  margin-bottom: 18px;
+  color: var(--app-depth);
+}
+
+.appPageHeader h2 {
+  margin: 0;
+  font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 540;
+  letter-spacing: -0.035em;
+}
+
+.appPageHeader p {
+  margin: 7px 0 0;
+  color: var(--app-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.adminPill {
+  margin-top: 36px;
+  flex: none;
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: var(--app-soft);
+  font-size: 10px;
+}
+
+.appNav {
+  position: fixed;
+  right: 12px;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  left: 12px;
+  z-index: 45;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  padding: 7px 8px;
+  background: var(--app-paper);
+  box-shadow: 0 14px 38px rgb(0 48 148 / 12%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  backdrop-filter: blur(18px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.appNavVisible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.desktopNavBrand {
+  display: none;
+}
+
+.appNavItem {
+  position: relative;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  border: 0;
+  border-radius: 17px;
+  background: transparent;
+  color: var(--app-muted);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.appNavItemActive {
+  background: var(--app-soft);
+  color: var(--app-primary);
+  font-weight: 650;
+}
+
+.appNavIconWrap {
+  position: relative;
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+.appNavIconWrap svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.appNavBadge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-radius: 999px;
+  padding: 0 3px;
+  background: #e55757;
+  color: white;
+  font-size: 9px;
+  line-height: 12px;
+  text-align: center;
+}
+
+@media (min-width: 720px) {
+  .sceneImageMobile {
+    display: none;
+  }
+
+  .sceneImageDesktop {
+    display: block;
+  }
+
+  .shoreCopySand {
+    top: clamp(88px, 11vh, 122px);
+    right: clamp(64px, 7vw, 132px);
+    left: auto;
+    width: min(40vw, 610px);
+    text-align: right;
+  }
+
+  .shoreCopySea {
+    top: auto;
+    right: auto;
+    bottom: clamp(86px, 13vh, 142px);
+    left: clamp(64px, 7vw, 132px);
+    width: min(42vw, 640px);
+    text-align: left;
+  }
+
+  .shorePrelude {
+    font-size: clamp(18px, 1.5vw, 25px);
+  }
+
+  .shoreTitle {
+    font-size: clamp(52px, 5vw, 82px);
+  }
+
+  .shoreClosing {
+    font-size: clamp(20px, 2vw, 31px);
+  }
+
+  .diveCopy {
+    top: clamp(76px, 10vh, 112px);
+  }
+
+  .diveTitle {
+    font-size: clamp(42px, 4.1vw, 68px);
+  }
+
+  .diveCaption {
+    bottom: clamp(76px, 10vh, 108px);
+    font-size: 15px;
+  }
+
+  .promiseContent {
+    right: 23%;
+    left: 23%;
+  }
+
+  .promiseTitle {
+    font-size: clamp(44px, 4.2vw, 70px);
+  }
+
+  .appProductInner {
+    max-width: none;
+    padding: 0;
+  }
+
+  .appShell {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+
+  .appNav {
+    position: sticky;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    align-self: start;
+    height: 100dvh;
+    width: 100%;
+    margin: 0;
+    padding: 26px 14px;
+    flex-direction: column;
+    gap: 5px;
+    border-width: 0 1px 0 0;
+    border-radius: 0;
+    border-color: rgb(255 255 255 / 14%);
+    background: var(--app-depth);
+    box-shadow: 18px 0 52px rgba(0, 10, 24, 0.22);
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    backdrop-filter: blur(22px);
+  }
+
+  .appNavItem {
+    min-height: 50px;
+    padding: 0 17px;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 13px;
+    border-radius: 15px;
+    color: var(--app-on-dark);
+    font-size: 13px;
+  }
+
+  .appNavItem:hover {
+    background: rgb(255 255 255 / 12%);
+    color: #ffffff;
+  }
+
+  .appNavItemActive {
+    background: var(--app-primary);
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(190, 222, 228, 0.17);
+  }
+
+  .desktopNavBrand {
+    display: block;
+    margin: 2px 8px 30px;
+    color: #ffffff;
+  }
+
+  .desktopNavWordmark {
+    display: flex;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+
+  .desktopNavBrand > span {
+    color: var(--app-on-dark);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .appContent {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 42px clamp(32px, 4.5vw, 72px) 96px;
+  }
+
+  .appPageHeader {
+    padding-inline: 4px;
+  }
+
+  .appWordmark {
+    display: none;
+  }
+
+}
+
+@keyframes shorelineWash {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translate3d(0, 0, 0) scale(1.002);
+  }
+  42% {
+    opacity: 0.82;
+    transform: translate3d(-0.5%, -0.35%, 0) scale(1.012);
+  }
+  67% {
+    opacity: 0.58;
+    transform: translate3d(-0.2%, -0.12%, 0) scale(1.007);
+  }
+}
+
+@keyframes fishSwimRight {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.88);
+  }
+  to {
+    transform: translate3d(155vw, 3vh, 0) scale(0.96);
+  }
+}
+
+@keyframes fishSwimLeft {
+  from {
+    transform: translate3d(0, 0, 0) scaleX(-1) scale(0.72);
+  }
+  to {
+    transform: translate3d(-145vw, 2vh, 0) scaleX(-1) scale(0.78);
+  }
+}
+
+@keyframes cueTravel {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(46px);
+    opacity: 0;
+  }
+}
+
+@media (max-height: 720px) {
+  .shoreCopySand {
+    top: 70px;
+  }
+
+  .shoreCopySea {
+    top: 66%;
+  }
+
+  .shoreTitle {
+    font-size: clamp(35px, 9vw, 50px);
+  }
+
+  .shoreClosing {
+    margin-top: 8px !important;
+    font-size: 16px;
+  }
+
+  .diveCopy {
+    top: 62px;
+  }
+
+  .diveCaption {
+    bottom: 87px;
+  }
+
+  .promiseContent {
+    transform: translateY(-45%);
+  }
+
+  .promiseBody {
+    margin-top: 15px;
+    line-height: 1.65;
+  }
+
+  .enterButton {
+    margin-top: 23px;
+  }
+}
+
+@media (min-width: 720px) and (max-height: 720px) {
+  .shoreCopySand {
+    top: 68px;
+  }
+
+  .shoreCopySea {
+    top: auto;
+    bottom: 68px;
+  }
+
+  .shoreTitle {
+    font-size: clamp(46px, 4.5vw, 66px);
+  }
+
+  .shoreClosing {
+    font-size: clamp(18px, 1.7vw, 25px);
+  }
+
+  .promiseContent {
+    transform: translateY(-43%);
+  }
+}
+
+@media (max-width: 639px) {
+  .portraitFrame {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .fishLayer {
+    width: 76vw;
+  }
+
+  .fishLayerNear {
+    left: -78vw;
+  }
+
+  .fishLayerFar {
+    right: -58vw;
+    width: 58vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience {
+    scroll-behavior: auto;
+  }
+
+  .shoreFoamImage,
+  .fishLayer,
+  .cueLine::after {
+    animation: none;
+  }
+
+  .shoreFoamImage,
+  .fishLayer {
+    display: none;
+  }
+
+  .enterButton {
+    transition: none;
+  }
+}
+
+.applicationExperience {
+  height: auto;
+  min-height: 100dvh;
+  overflow: visible;
+  scroll-snap-type: none;
+  background: var(--app-canvas);
+}
+
+.applicationExperience .storyScreen {
+  display: none;
+}
+
+.applicationExperience .productScreen {
+  min-height: 100dvh;
+  overflow: visible;
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+}

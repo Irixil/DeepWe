@@ -1,0 +1,26 @@
+{
+  "perspectives": [
+    {
+      "role": "a",
+      "summary": {
+        "format": "confirmed_plain_text",
+        "observation": "我和伴侣约好周六一起吃晚饭，他当天说临时加班没法来，只留了一句“别多想”。我等了很久，心里很堵。我通常希望重要安排有变化能提前告诉我。我想先把自己的心情理清，不急着去和他说。",
+        "feelings": [],
+        "needs": [],
+        "request": ""
+      },
+      "summaryConfirmed": 1
+    },
+    {
+      "role": "b",
+      "summary": {
+        "format": "confirmed_plain_text",
+        "observation": "我们原本约好周六吃晚饭，那天我确实临时加班。我发“别多想”是想说工作变化和她没有关系，但当时没有解释清楚。我觉得自己被误解了，也知道她一直在等。我希望把当时的情况讲清楚，不想一开口就互相指责。",
+        "feelings": [],
+        "needs": [],
+        "request": ""
+      },
+      "summaryConfirmed": 1
+    }
+  ]
+}

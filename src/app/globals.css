@@ -1,0 +1,53 @@
+@import "tailwindcss" source("..");
+@import "./app-palette.css";
+@import "./deepwe-v4.tokens.css";
+
+@theme {
+  /* 情感辅助青蓝：清透海蓝承载安全感，暖米白与灰珊瑚补充亲近感 */
+  --color-primary: #3f7f9b;
+  --color-primary-hover: #2e647e;
+  --color-primary-soft: #d9edf0;
+  --color-accent: #c77f75;
+  --color-accent-soft: #f1ddd7;
+  --color-bg: #dcecef;
+  --color-surface: #f8f3ea;
+  --color-muted: #647f8d;
+  --radius-card: 20px;
+}
+
+:root {
+  --dw-blue: #244f6b;
+  --dw-blue-soft: #d9edf0;
+  --dw-teal: #5d96a8;
+  --dw-seafoam: #8ba49d;
+  --dw-coral: #c77f75;
+  --dw-paper: #f8f3ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC",
+    sans-serif;
+  color: #29485c;
+  background:
+    radial-gradient(
+      900px 420px at 50% -12%,
+      rgba(79, 158, 184, 0.2) 0%,
+      rgba(79, 158, 184, 0) 60%
+    ),
+    #dcecef;
+}
+
+
+a {
+  color: var(--color-primary);
+}

@@ -1,0 +1,25 @@
+name: 问题反馈 / Bug report
+description: 使用虚构案例描述可复现的问题。
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "请勿提交真实对话、Memory、账号、Cookie、令牌或密钥。权限泄露等安全问题请使用 Security → Report a vulnerability。"
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请说明使用本地副本还是官网，以及可复现的操作步骤。
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: 预期结果与实际结果
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 环境
+      placeholder: "浏览器、系统、本地副本版本或提交号"
